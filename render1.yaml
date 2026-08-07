@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: chery-catalog
+    runtime: python
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "cd backend && gunicorn app:app --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: PYTHON_VERSION
+        value: 3.11.9
+    disk:
+      name: chery-catalog-db
+      mountPath: /opt/render/project/src/database
+      sizeGB: 1
